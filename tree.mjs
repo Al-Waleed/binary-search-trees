@@ -98,8 +98,19 @@ export default function tree(array) {
       pointer.right !== null &&
       pointer.data === value
     ) {
-      console.log("fourth");
-      // return;
+      // the second largest value will be the right node if it's a leaf node, otherwise it'll be the deepest left node of the current right pointer
+      // we assign pointer.right to childPointer to be able to go and find the 2nd largest value after the one we want to delete
+      let childPointer = pointer.right;
+      // to check if childPointer "the right of the current node" has a left node
+      while (childPointer.left !== null) {
+        // if yes we keep going to the left
+        childPointer = childPointer.left;
+      }
+      // we use the same function to delete the 2nd largest value after the one we're deleting
+      deleteItem(childPointer.data);
+      // we set the pointer's value to the value of the just deleted child node
+      pointer.data = childPointer.data;
+      return;
     }
 
     // if the value is smaller than the pointer's value we go left
@@ -119,20 +130,8 @@ export default function tree(array) {
   return { root, insert, prettyPrint, deleteItem };
 }
 
-const test = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30];
+const test = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45];
 
 const binaryTree = tree(test);
 
-binaryTree.prettyPrint();
-console.log("########################");
-binaryTree.deleteItem(6);
-// binaryTree.deleteItem(4);
-binaryTree.deleteItem(10);
-binaryTree.deleteItem(12);
-binaryTree.deleteItem(4);
-binaryTree.deleteItem(26);
-binaryTree.deleteItem(22);
-binaryTree.deleteItem(20);
-binaryTree.deleteItem(28);
-console.log("########################");
 binaryTree.prettyPrint();
