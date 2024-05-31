@@ -60,6 +60,33 @@ export default function tree(array) {
         return;
       }
     }
+    // second case: deleting a node with one child to its right
+    else if (
+      pointer.left === null &&
+      pointer.right !== null &&
+      pointer.data === value
+    ) {
+      console.log("second");
+      return;
+    }
+    // third case: deleting a node with one child to its left
+    else if (
+      pointer.left !== null &&
+      pointer.right === null &&
+      pointer.data === value
+    ) {
+      console.log("third");
+      return;
+    }
+    // fourth case: deleting a node with two children
+    else if (
+      pointer.left !== null &&
+      pointer.right !== null &&
+      pointer.data === value
+    ) {
+      console.log("fourth");
+      // return;
+    }
 
     // if the value is smaller than the pointer's value we go left
     if (value < pointer.data) {
