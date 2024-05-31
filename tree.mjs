@@ -82,8 +82,15 @@ export default function tree(array) {
       pointer.right === null &&
       pointer.data === value
     ) {
-      console.log("third");
-      return;
+      // case a:the value we want to delete is to the left of the parentPointer
+      if (parentPointer.data > value) {
+        parentPointer.left = pointer.left;
+        return;
+        // case b:the value we want to delete is to the right of the parentPointer
+      } else if (parentPointer.data < value) {
+        parentPointer.right = pointer.left;
+        return;
+      }
     }
     // fourth case: deleting a node with two children
     else if (
@@ -118,6 +125,14 @@ const binaryTree = tree(test);
 
 binaryTree.prettyPrint();
 console.log("########################");
-binaryTree.deleteItem(2);
+binaryTree.deleteItem(6);
+// binaryTree.deleteItem(4);
+binaryTree.deleteItem(10);
+binaryTree.deleteItem(12);
+binaryTree.deleteItem(4);
+binaryTree.deleteItem(26);
+binaryTree.deleteItem(22);
+binaryTree.deleteItem(20);
+binaryTree.deleteItem(28);
 console.log("########################");
 binaryTree.prettyPrint();
