@@ -66,8 +66,15 @@ export default function tree(array) {
       pointer.right !== null &&
       pointer.data === value
     ) {
-      console.log("second");
-      return;
+      // case a:the value we want to delete is to the left of the parentPointer
+      if (parentPointer.data > value) {
+        parentPointer.left = pointer.right;
+        return;
+        // case b:the value we want to delete is to the right of the parentPointer
+      } else if (parentPointer.data < value) {
+        parentPointer.right = pointer.right;
+        return;
+      }
     }
     // third case: deleting a node with one child to its left
     else if (
