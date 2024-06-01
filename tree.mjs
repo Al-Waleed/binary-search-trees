@@ -127,11 +127,25 @@ export default function tree(array) {
     deleteItem(value, pointer, parentPointer);
   };
 
-  return { root, insert, prettyPrint, deleteItem };
+  const find = (value, pointer = root) => {
+    // base case to return the node we're looking for
+    if (pointer.data === value) return pointer;
+    //to check if the value we're looking for is on the right of the pointer
+    if (value > pointer.data) {
+      pointer = pointer.right;
+    } else {
+      // if it's on the left of the pointer
+      pointer = pointer.left;
+    }
+    return find(value, pointer);
+  };
+
+  return { root, insert, prettyPrint, deleteItem, find };
 }
 
 const test = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45];
 
 const binaryTree = tree(test);
+console.log(binaryTree.find(24));
 
 binaryTree.prettyPrint();
