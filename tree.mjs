@@ -6,7 +6,7 @@ export default function tree(array) {
   // to sort and remove duplicates
   const sortedArray = mergeSort(array);
   // to build the tree using the buildTree function
-  const root = buildTree(sortedArray);
+  let root = buildTree(sortedArray);
 
   const insert = (value) => {
     let pointer = root;
@@ -262,13 +262,17 @@ export default function tree(array) {
     // get the height of each side using the height() function
     const leftSideHeight = height(root.left);
     const rightSideHeight = height(root.right);
-    
+
     // see if the difference between them is more than 1
     return Math.abs(leftSideHeight - rightSideHeight) <= 1;
   };
 
+  const reBalance = () => {
+    // use inOrder() to get a sorted array from the tree then build the tree again to re balance it
+    root = buildTree(inOrder());
+  };
+
   return {
-    root,
     insert,
     prettyPrint,
     deleteItem,
@@ -280,16 +284,6 @@ export default function tree(array) {
     height,
     depth,
     isBalanced,
+    reBalance,
   };
 }
-
-const test = [
-  3, 66, 43, 645, 23, 654, 34, 12, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39,
-  42, 45,
-];
-const test2 = [1, 2, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-
-const binaryTree = tree(test);
-const binaryTree2 = tree(test2);
-
-console.log(binaryTree2.isBalanced());
