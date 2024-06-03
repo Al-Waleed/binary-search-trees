@@ -171,7 +171,7 @@ export default function tree(array) {
     // to save the results here
     const result = [];
 
-    //a self invoking function to traverse the tree in recursive 
+    //a self invoking function to traverse the tree in recursive
     (function traverse(currentNode = root) {
       // our base case
       if (currentNode === null) return;
@@ -179,6 +179,8 @@ export default function tree(array) {
       traverse(currentNode.left);
       // to push the data in the results array
       result.push(currentNode.data);
+      // call the callback function in case its passed in
+      if (callback) callback();
       // we keep traversing to the right node
       traverse(currentNode.right);
     })();
