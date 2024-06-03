@@ -220,7 +220,7 @@ export default function tree(array) {
     (function traverse(currentNode = root) {
       // our base case
       if (currentNode === null) return;
-      
+
       // we keep traversing to the left node
       traverse(currentNode.left);
       // we keep traversing to the right node
@@ -235,6 +235,16 @@ export default function tree(array) {
     return result;
   };
 
+  const height = (currentNode = root) => {
+    // return -1 to balance the +1 on empty nodes
+    if (currentNode === null) return -1;
+
+    let leftHeight = height(currentNode.left);
+    let rightHeight = height(currentNode.right);
+    
+    return Math.max((leftHeight, rightHeight) + 1)
+  };
+
   return {
     root,
     insert,
@@ -245,18 +255,21 @@ export default function tree(array) {
     inOrder,
     preOrder,
     postOrder,
+    height,
   };
 }
 
-const test = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45];
+const test = [
+  3, 66, 43, 645, 23, 654, 34, 12, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39,
+  42, 45,
+];
 const test2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
 const binaryTree = tree(test);
 const binaryTree2 = tree(test2);
 // console.log(binaryTree.find(24));
 
-binaryTree2.prettyPrint();
-// console.log(binaryTree2.levelOrder());
-console.log(binaryTree2.inOrder());
-console.log(binaryTree2.preOrder());
-console.log(binaryTree2.postOrder());
+binaryTree.prettyPrint();
+const testing = binaryTree.find(15);
+console.log(binaryTree.height(testing));
+console.log(binaryTree.height());
