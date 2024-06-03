@@ -241,8 +241,21 @@ export default function tree(array) {
 
     let leftHeight = height(currentNode.left);
     let rightHeight = height(currentNode.right);
-    
-    return Math.max((leftHeight, rightHeight) + 1)
+
+    return Math.max((leftHeight, rightHeight) + 1);
+  };
+
+  const depth = (node, currentNode = root) => {
+    // base case
+    if (currentNode.data === node.data) return 0;
+
+    // to know if we need to go to left or right of the tree
+    if (node.data < currentNode.data) {
+      // currentNode = currentNode.left
+      return depth(node, currentNode.left) + 1;
+    } else {
+      return depth(node, currentNode.right) + 1;
+    }
   };
 
   return {
@@ -256,6 +269,7 @@ export default function tree(array) {
     preOrder,
     postOrder,
     height,
+    depth,
   };
 }
 
@@ -270,6 +284,7 @@ const binaryTree2 = tree(test2);
 // console.log(binaryTree.find(24));
 
 binaryTree.prettyPrint();
-const testing = binaryTree.find(15);
-console.log(binaryTree.height(testing));
-console.log(binaryTree.height());
+const testing = binaryTree.find(42);
+// console.log(binaryTree.height(testing));
+// console.log(binaryTree.height());
+console.log(binaryTree.depth(testing));
