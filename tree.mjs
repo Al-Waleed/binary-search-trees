@@ -140,12 +140,40 @@ export default function tree(array) {
     return find(value, pointer);
   };
 
-  return { root, insert, prettyPrint, deleteItem, find };
+  const levelOrder = (callback) => {
+    // create a queue and add the root node to it
+    const queue = [root];
+    // to push our results here
+    const result = [];
+    // to keep looping over the queue until nothing is left in it
+    while (queue.length !== 0) {
+      // the current node will be the first node in the queue
+      let currentNode = queue[0];
+      // if the currentNode has a left node we enqueue it
+      if (currentNode.left) queue.push(currentNode.left);
+      // if the currentNode has a right node we enqueue it
+      if (currentNode.right) queue.push(currentNode.right);
+
+      // then add the data of the current node to the results
+      result.push(currentNode.data);
+
+      // if a callback is passed we call it on the current node
+      if (callback) callback(currentNode);
+
+      // dequeue the current node
+      queue.shift();
+    }
+
+    return result;
+  };
+
+  return { root, insert, prettyPrint, deleteItem, find, levelOrder };
 }
 
 const test = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45];
 
 const binaryTree = tree(test);
-console.log(binaryTree.find(24));
+// console.log(binaryTree.find(24));
 
 binaryTree.prettyPrint();
+console.log(binaryTree.levelOrder());
