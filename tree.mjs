@@ -167,13 +167,35 @@ export default function tree(array) {
     return result;
   };
 
-  return { root, insert, prettyPrint, deleteItem, find, levelOrder };
+  const inOrder = (callback) => {
+    // to save the results here
+    const result = [];
+
+    //a self invoking function to traverse the tree in recursive 
+    (function traverse(currentNode = root) {
+      // our base case
+      if (currentNode === null) return;
+      // we keep traversing to the left node
+      traverse(currentNode.left);
+      // to push the data in the results array
+      result.push(currentNode.data);
+      // we keep traversing to the right node
+      traverse(currentNode.right);
+    })();
+
+    return result;
+  };
+
+  return { root, insert, prettyPrint, deleteItem, find, levelOrder, inOrder };
 }
 
 const test = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45];
+const test2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
 const binaryTree = tree(test);
+const binaryTree2 = tree(test2);
 // console.log(binaryTree.find(24));
 
-binaryTree.prettyPrint();
-console.log(binaryTree.levelOrder());
+binaryTree2.prettyPrint();
+// console.log(binaryTree2.levelOrder());
+console.log(binaryTree2.inOrder());
