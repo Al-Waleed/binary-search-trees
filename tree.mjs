@@ -188,7 +188,64 @@ export default function tree(array) {
     return result;
   };
 
-  return { root, insert, prettyPrint, deleteItem, find, levelOrder, inOrder };
+  const preOrder = (callback) => {
+    // to save the results here
+    const result = [];
+
+    //a self invoking function to traverse the tree in recursive
+    (function traverse(currentNode = root) {
+      // our base case
+      if (currentNode === null) return;
+
+      // to push the data in the results array
+      result.push(currentNode.data);
+
+      // call the callback function in case its passed in
+      if (callback) callback();
+
+      // go to the left node
+      traverse(currentNode.left);
+      // go to the right node
+      traverse(currentNode.right);
+    })();
+
+    return result;
+  };
+
+  const postOrder = (callback) => {
+    // to save the results here
+    const result = [];
+
+    //a self invoking function to traverse the tree in recursive
+    (function traverse(currentNode = root) {
+      // our base case
+      if (currentNode === null) return;
+      
+      // we keep traversing to the left node
+      traverse(currentNode.left);
+      // we keep traversing to the right node
+      traverse(currentNode.right);
+
+      // to push the data in the results array
+      result.push(currentNode.data);
+      // call the callback function in case its passed in
+      if (callback) callback();
+    })();
+
+    return result;
+  };
+
+  return {
+    root,
+    insert,
+    prettyPrint,
+    deleteItem,
+    find,
+    levelOrder,
+    inOrder,
+    preOrder,
+    postOrder,
+  };
 }
 
 const test = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45];
@@ -201,3 +258,5 @@ const binaryTree2 = tree(test2);
 binaryTree2.prettyPrint();
 // console.log(binaryTree2.levelOrder());
 console.log(binaryTree2.inOrder());
+console.log(binaryTree2.preOrder());
+console.log(binaryTree2.postOrder());
